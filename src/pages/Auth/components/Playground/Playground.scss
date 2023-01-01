@@ -1,0 +1,21 @@
+.playground {
+  width: 50%;
+  height: 100%;
+  background: #F5F6F7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &-inner {
+    display: flex;
+    flex-direction: column;
+    h1 {
+      font-weight: 900;
+      font-size: 40px;
+      line-height: 32px;
+      color: #003367;
+      text-align: center;
+      margin-bottom: 47px;
+    }
+  }
+}

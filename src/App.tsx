@@ -1,26 +1,17 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {FC} from 'react';
+import { Routes, Route } from 'react-router-dom';
+import AuthLayout from 'layouts/Auth';
+import Login from 'pages/Auth/components/Login';
+import './App.scss';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App: FC = () => (
+    <Routes>
+        <Route path='' element={<h1>home</h1>}/>
+        {/*<Route path='auth/login' element={<Auth />} />*/}
+        <Route path='auth' element={<AuthLayout />}>
+            <Route path='login' element={<Login />} />
+        </Route>
+    </Routes>
+);
 
 export default App;

@@ -29,8 +29,8 @@ instance.interceptors.response.use(
 		const originalConfig = err.config;
 		if (originalConfig.url !== 'auth/login' && err.response) {
 			if (err.response.status === 401) {
-				sessionStorage.removeItem('token');
-				//TokenService.removeLocalAccessToken();
+				TokenService.removeLocalAccessToken();
+				TokenService.removeLocalRefreshToken();
 				window.location.href = 'auth/login';
 				/*return await instance
 					.post('/logout')

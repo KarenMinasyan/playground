@@ -1,0 +1,31 @@
+.error {
+  width: 370px;
+  height: 36px;
+  background: rgba(175, 39, 39, 0.1);
+  border-radius: 4px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+
+  &-icon {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #AF2727;
+    color: #AF2727;
+    border-radius: 50%;
+    margin-right: 12px;
+    margin-left: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 9px;
+  }
+
+  p {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0.25px;
+    color: #AF2727;
+  }
+}

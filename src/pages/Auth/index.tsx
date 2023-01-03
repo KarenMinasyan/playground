@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import {Outlet} from "react-router-dom";
-import Playground from "./components/Playground/index.";
+import Playground from "./components/Playground";
 import Copyright from "./components/Copyright";
 import './Auth.scss';
 

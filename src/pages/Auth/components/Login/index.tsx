@@ -1,47 +1,62 @@
-import React, {useEffect} from 'react';
-import {useForm} from 'react-hook-form';
-import { VALIDATE_MESSAGES } from 'helpers/constants';
+import React, {FC, useEffect} from 'react';
+import {SubmitHandler, useForm} from 'react-hook-form';
+import {useNavigate} from "react-router-dom";
+import {VALIDATE_MESSAGES} from 'helpers/constants';
+import Button from 'components/common/Button';
+import Error from 'components/Error';
+import {FormValues, LoginType} from 'types';
+import {useAppDispatch} from 'hook';
+import {signIn} from 'store/auth/thunks';
 import './Login.scss';
 
-const { FIELD_REQUIRED } = VALIDATE_MESSAGES;
+const {FIELD_REQUIRED, EMAIL_INVALID} = VALIDATE_MESSAGES;
 
-const Login = () => {
-    const {
-        register,
-        handleSubmit,
-        watch,
-        formState: {errors, isValid},
-    } = useForm({mode: 'onChange'});
+const Login: FC = () => {
+    const {register, handleSubmit, watch, formState: {errors, isValid}} = useForm<FormValues>({mode: 'onChange'});
+
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const subscription = watch(v => v);
         return () => subscription.unsubscribe();
     }, [watch]);
 
-    const onSubmit = (data: any) => {
-        const newData = {
+    const onSubmit: SubmitHandler<FormValues> = (data: { email: string }) => {
+        const newData: LoginType = {
             email: data.email,
             languageID: '1',
         }
 
-        console.log(newData);
+        dispatch(signIn(newData))
+            .unwrap()
+            .then(res => {
+                if (res === 'done') {
+                    navigate('/auth/code');
+                }
+            })
     }
 
     return (
         <div className='login'>
             <form className='login-inner' onSubmit={handleSubmit(onSubmit)}>
                 <h3>Login</h3>
+                {errors.email && <Error message={errors.email?.message}/>}
                 <label>
                     Enter your email
                     <input
                         type='text'
                         {...register('email', {
                             required: FIELD_REQUIRED,
-                        })}/>
+                            pattern: {
+                                value: /^\w+([.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+                                message: EMAIL_INVALID
+                            }
+                        })}
+                    />
                 </label>
-                {/*{errors.email && <span className='error'>{errors.email?.message}</span>}*/}
                 <div className='login-inner__btn'>
-                    <button>SEND CODE</button>
+                    <Button children='SEND CODE' disabled={!isValid}/>
                 </div>
             </form>
         </div>

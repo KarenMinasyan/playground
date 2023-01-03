@@ -1,10 +1,9 @@
-//import { authSelector } from 'helpers/reduxSelectors';
-//import {useAppSelector} from "hook";
+import { authSelector } from 'helpers/reduxSelectors';
+import {useAppSelector} from "hook";
 
-const useAuth = () : boolean => {
-	// const { token } = useAppSelector(authSelector);
-	// return !!token;
-    return true;
+const useAuth = () => {
+	 const { token } = useAppSelector(authSelector);
+	 return !!token;
 };
 
 export default useAuth;

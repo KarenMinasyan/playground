@@ -1,11 +1,12 @@
 import React, {ChangeEvent, useEffect} from 'react';
-import {useForm, useFormState} from 'react-hook-form';
+import {useForm} from 'react-hook-form';
 import Button from 'components/common/Button';
 import {useAppDispatch, useAppSelector} from 'hook';
 import {clearDone} from 'store/auth/authSlice';
 import {useNavigate} from 'react-router-dom';
 import {authSelector} from 'helpers/reduxSelectors';
-import {FormMultipleValues} from 'types';
+import {codeMessage} from 'store/auth/thunks';
+import {CodeType, FormMultipleValues} from 'types';
 import { ReactComponent as Close } from 'assets/imgs/close.svg';
 import './Code.scss';
 
@@ -14,15 +15,12 @@ const Code = () => {
     register,
     handleSubmit,
     setFocus,
-    control,
     reset,
-    formState: {errors, isValid, isDirty}
+    formState: {errors, isValid, isDirty, dirtyFields}
   } = useForm<FormMultipleValues>({mode: 'onChange'});
   const {status, loading} = useAppSelector(authSelector);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
-  const {dirtyFields} = useFormState({control});
 
   useEffect(() => {
     setFocus('firstNum');
@@ -46,7 +44,19 @@ const Code = () => {
     e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 1)
   }
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: {[x: string]: string;}): void => {
+    const value = Object.values(data).join('');
+
+    const newData: CodeType = {
+      email: 'demo@demo.com',
+      code: value,
+      languageID: '1',
+    }
+
+    dispatch(codeMessage(newData))
+      .unwrap()
+      .then(() => navigate('/'))
+      .catch(e => console.log(e));
   }
 
   return (

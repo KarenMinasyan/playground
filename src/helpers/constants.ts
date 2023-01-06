@@ -3,4 +3,4 @@ export const VALIDATE_MESSAGES = {
     EMAIL_INVALID: 'Email address is invalid'
 };
 
-export const MESSAGE_FIELDS: string[] = ['firstNum', 'secondNum', 'thirdNum', 'fourthNum', 'fifthNum', 'sixthNum']
+export const MESSAGE_FIELDS = ['firstNum', 'secondNum', 'thirdNum', 'fourthNum', 'fifthNum', 'sixthNum']

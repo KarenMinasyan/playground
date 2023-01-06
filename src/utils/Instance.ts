@@ -10,8 +10,7 @@ const instance = axios.create({
 });
 instance.interceptors.request.use(
     (config: any) => {
-		//const token = TokenService.getLocalAccessToken();
-		const token = sessionStorage.getItem('token');
+		const token = TokenService.getLocalAccessToken();
 		if (token) {
 			config.headers['Authorization'] = `Bearer ${token}`;
 		}
@@ -31,13 +30,12 @@ instance.interceptors.response.use(
 			if (err.response.status === 401) {
 				TokenService.removeLocalAccessToken();
 				TokenService.removeLocalRefreshToken();
-				window.location.href = 'auth/login';
-				/*return await instance
-					.post('/logout')
+				return await instance
+					.post('Accounts/Logout')
 					.then(() => {
 						window.location.href = 'auth/login';
 					})
-					.catch(e => e);*/
+					.catch(e => e);
 			}
 		}
 		return Promise.reject(err);

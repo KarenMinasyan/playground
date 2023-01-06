@@ -1,6 +1,7 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import initialState from './initialState';
-import {codeMessage, signIn} from './thunks';
+import {codeMessage, signIn, signOut} from './thunks';
+import {logout} from "../../services/auth-service";
 
 const authSlice = createSlice({
   name: 'auth',
@@ -27,13 +28,25 @@ const authSlice = createSlice({
       state.loading = true;
     },
     [codeMessage.fulfilled.type]: (state, {payload}: PayloadAction<string[]>) => {
-      console.log(payload, 'payload');
       state.loading = false;
       state.token = payload[0];
       state.refreshToken = payload[1];
       state.error = '';
     },
     [codeMessage.rejected.type]: (state, {payload}) => {
+      state.loading = false;
+      state.error = payload;
+    },
+    [signOut.pending.type]: state => {
+      state.loading = true;
+    },
+    [signOut.fulfilled.type]: state => {
+      state.loading = false;
+      state.token = null;
+      state.refreshToken = null;
+      state.error = '';
+    },
+    [signOut.rejected.type]: (state, {payload}) => {
       state.loading = false;
       state.error = payload;
     },

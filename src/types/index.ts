@@ -7,6 +7,15 @@ export type FormValues = {
     email: string;
 };
 
+export type FormMultipleValues = {
+    firstNum: string;
+    secondNum: string;
+    thirdNum: string;
+    fourthNum: string;
+    fifthNum: string;
+    sixthNum: string;
+};
+
 export type InitialState = {
     loading: boolean;
     email: string;

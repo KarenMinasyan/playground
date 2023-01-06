@@ -1,18 +1,20 @@
 import React, {FC, useEffect} from 'react';
 import {SubmitHandler, useForm} from 'react-hook-form';
-import {useNavigate} from "react-router-dom";
+import {useNavigate} from 'react-router-dom';
 import {VALIDATE_MESSAGES} from 'helpers/constants';
 import Button from 'components/common/Button';
 import Error from 'components/Error';
 import {FormValues, LoginType} from 'types';
-import {useAppDispatch} from 'hook';
+import {useAppDispatch, useAppSelector} from 'hook';
 import {signIn} from 'store/auth/thunks';
+import {authSelector} from 'helpers/reduxSelectors';
 import './Login.scss';
 
 const {FIELD_REQUIRED, EMAIL_INVALID} = VALIDATE_MESSAGES;
 
 const Login: FC = () => {
     const {register, handleSubmit, watch, formState: {errors, isValid}} = useForm<FormValues>({mode: 'onChange'});
+    const { loading } = useAppSelector(authSelector);
 
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
@@ -56,7 +58,7 @@ const Login: FC = () => {
                     />
                 </label>
                 <div className='login-inner__btn'>
-                    <Button children='SEND CODE' disabled={!isValid}/>
+                    <Button children='SEND CODE' disabled={!isValid || loading}/>
                 </div>
             </form>
         </div>

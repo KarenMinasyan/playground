@@ -55,7 +55,7 @@ const Code = () => {
 
     dispatch(codeMessage(newData))
       .unwrap()
-      .then(() => navigate('/'))
+      .then(() => navigate('../../'))
       .catch(e => console.log(e));
   }
 

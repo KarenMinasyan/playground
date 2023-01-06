@@ -26,10 +26,11 @@ const authSlice = createSlice({
     [codeMessage.pending.type]: state => {
       state.loading = true;
     },
-    [codeMessage.fulfilled.type]: (state, {payload}: PayloadAction<{token: string; refreshToken: string}>) => {
+    [codeMessage.fulfilled.type]: (state, {payload}: PayloadAction<string[]>) => {
+      console.log(payload, 'payload');
       state.loading = false;
-      state.token = payload.token;
-      state.refreshToken = payload.refreshToken;
+      state.token = payload[0];
+      state.refreshToken = payload[1];
       state.error = '';
     },
     [codeMessage.rejected.type]: (state, {payload}) => {

@@ -5,7 +5,7 @@ import Auth from 'pages/Auth';
 
 const AuthLayout: FC = () => {
 	  const auth = useAuth();
-	  return auth ? <Navigate to='' /> : <Auth />;
+	  return auth ? <Navigate to='/' /> : <Auth />;
 };
 
 export default AuthLayout;

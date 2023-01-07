@@ -5,11 +5,11 @@ import {useAppDispatch, useAppSelector} from 'hook';
 import {clearDone} from 'store/auth/authSlice';
 import {useNavigate} from 'react-router-dom';
 import {authSelector} from 'helpers/reduxSelectors';
+import {MESSAGE_FIELDS} from 'helpers/constants';
 import {codeMessage} from 'store/auth/thunks';
-import {CodeType, FormMultipleValues} from 'types';
+import {CodeType} from 'types';
 import { ReactComponent as Close } from 'assets/imgs/close.svg';
 import './Code.scss';
-import {MESSAGE_FIELDS} from "../../../../helpers/constants";
 
 const Code = () => {
   const {

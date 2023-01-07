@@ -6,7 +6,7 @@ import TokenService from 'utils/TokenService';
 export const signIn = createAsyncThunk<string, LoginType, { rejectValue: string }>('auth/signIn', async (data, {rejectWithValue}) => {
   return login(data)
     .then(({data}) => data)
-    .catch(e => rejectWithValue(e.response.data.message));
+    .catch(e => rejectWithValue(e.response.data));
 });
 
 export const codeMessage = createAsyncThunk<string[], CodeType, { rejectValue: string }>('auth/codeMessage', async (data, {rejectWithValue}) => {

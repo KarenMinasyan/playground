@@ -3,9 +3,9 @@ import {code, login, logout} from 'services/auth-service';
 import {CodeType, LoginType} from 'types';
 import TokenService from 'utils/TokenService';
 
-export const signIn = createAsyncThunk<string, LoginType, { rejectValue: string }>('auth/signIn', async (data, {rejectWithValue}) => {
+export const signIn = createAsyncThunk<{ status: string; email: string }, LoginType, { rejectValue: string }>('auth/signIn', async (data, {rejectWithValue}) => {
   return login(data)
-    .then(({data}) => data)
+    .then(({data: resData}) => ({status:resData, email: data.email}))
     .catch(e => rejectWithValue(e.response.data));
 });
 

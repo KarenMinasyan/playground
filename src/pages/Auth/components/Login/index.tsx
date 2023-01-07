@@ -36,8 +36,8 @@ const Login: FC = () => {
 
     dispatch(signIn(newData))
       .unwrap()
-      .then(res => {
-        if (res === 'done') {
+      .then(({status}) => {
+        if (status === 'done') {
           navigate('/auth/code');
         }
       })

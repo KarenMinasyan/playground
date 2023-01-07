@@ -17,9 +17,10 @@ const authSlice = createSlice({
     [signIn.pending.type]: state => {
       state.loading = true;
     },
-    [signIn.fulfilled.type]: (state, {payload}: PayloadAction<string>) => {
+    [signIn.fulfilled.type]: (state, {payload}: PayloadAction<{ status: string; email: string }>) => {
       state.loading = false;
-      state.status = payload;
+      state.status = payload.status;
+      state.email = payload.email;
       state.error = '';
     },
     [signIn.rejected.type]: (state, {payload}) => {

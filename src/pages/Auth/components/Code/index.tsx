@@ -20,7 +20,7 @@ const Code = () => {
     reset,
     formState: {errors, isValid, isDirty, dirtyFields}
   } = useForm({mode: 'onChange'});
-  const {status, loading, error} = useAppSelector(authSelector);
+  const {status, loading, error, email} = useAppSelector(authSelector);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -56,7 +56,7 @@ const Code = () => {
     const value = Object.values(data).join('');
 
     const newData: CodeType = {
-      email: 'demo@demo.com',
+      email,
       code: value,
       languageID: '1',
     }

@@ -1,8 +1,9 @@
 import React, {ChangeEvent, useEffect} from 'react';
 import {useForm} from 'react-hook-form';
 import Button from 'components/common/Button';
+import Error from 'components/Error';
 import {useAppDispatch, useAppSelector} from 'hook';
-import {clearDone} from 'store/auth/authSlice';
+import {clearDone, clearError} from 'store/auth/authSlice';
 import {useNavigate} from 'react-router-dom';
 import {authSelector} from 'helpers/reduxSelectors';
 import {MESSAGE_FIELDS} from 'helpers/constants';
@@ -19,7 +20,7 @@ const Code = () => {
     reset,
     formState: {errors, isValid, isDirty, dirtyFields}
   } = useForm({mode: 'onChange'});
-  const {status, loading} = useAppSelector(authSelector);
+  const {status, loading, error} = useAppSelector(authSelector);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -34,9 +35,15 @@ const Code = () => {
     }
 
     return () => {
-      dispatch(clearDone())
+      dispatch(clearDone());
+      dispatch(clearError());
     }
   }, [status]);
+
+  const clearCodeHandler = () => {
+    reset();
+    setFocus('firstNum');
+  }
 
   const handleFocus = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.nextSibling) {
@@ -54,6 +61,10 @@ const Code = () => {
       languageID: '1',
     }
 
+    if (error) {
+      dispatch(clearError())
+    }
+
     dispatch(codeMessage(newData))
       .unwrap()
       .then(() => navigate('../../'))
@@ -64,6 +75,7 @@ const Code = () => {
     <div className='code'>
       <form className='code-inner' onSubmit={handleSubmit(onSubmit)}>
         <h3>Login</h3>
+        {error && <Error message={error}/>}
         <p className='code-inner__description'>
           To finalize your verification, please enter the code that has been sent to your email address /
           SMS
@@ -72,6 +84,7 @@ const Code = () => {
           {
             MESSAGE_FIELDS.map(item => (
               <input
+                key={item}
                 className={`${dirtyFields[item] ? 'dirty' : ''} ${errors[item] ? 'invalid-value' : ''}`}
                 type='number'
                 {...register(item, {required: true})}
@@ -80,7 +93,7 @@ const Code = () => {
             ))
           }
 
-          {isDirty && <Close onClick={() => reset()} />}
+          {isDirty && <Close onClick={clearCodeHandler} />}
 
         </div>
         <div className='code-inner__btn'>

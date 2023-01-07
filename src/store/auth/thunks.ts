@@ -17,7 +17,7 @@ export const codeMessage = createAsyncThunk<string[], CodeType, { rejectValue: s
       TokenService.setLocalRefreshToken(refreshToken);
       return [token, refreshToken];
     })
-    .catch(e => rejectWithValue(e.response.data.message))
+    .catch(() => rejectWithValue('Please enter a valid code'));
 });
 
 export const signOut = createAsyncThunk<string, undefined, { rejectValue: string }>('auth/signOut', async (_, {rejectWithValue}) => {

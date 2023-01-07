@@ -3,7 +3,6 @@ import {useAppSelector} from "hook";
 
 const useAuth = () => {
 	 const { token } = useAppSelector(authSelector);
-  console.log(token, 'token');
 	 return !!token;
 };
 

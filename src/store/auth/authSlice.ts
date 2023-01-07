@@ -1,7 +1,6 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import initialState from './initialState';
 import {codeMessage, signIn, signOut} from './thunks';
-import {logout} from "../../services/auth-service";
 
 const authSlice = createSlice({
   name: 'auth',

@@ -9,6 +9,7 @@ import {codeMessage} from 'store/auth/thunks';
 import {CodeType, FormMultipleValues} from 'types';
 import { ReactComponent as Close } from 'assets/imgs/close.svg';
 import './Code.scss';
+import {MESSAGE_FIELDS} from "../../../../helpers/constants";
 
 const Code = () => {
   const {
@@ -17,7 +18,7 @@ const Code = () => {
     setFocus,
     reset,
     formState: {errors, isValid, isDirty, dirtyFields}
-  } = useForm<FormMultipleValues>({mode: 'onChange'});
+  } = useForm({mode: 'onChange'});
   const {status, loading} = useAppSelector(authSelector);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -68,42 +69,16 @@ const Code = () => {
           SMS
         </p>
         <div className='code-inner__fields'>
-          <input
-            className={`${dirtyFields.firstNum ? 'dirty' : ''} ${errors.firstNum ? 'invalid-value' : ''}`}
-            type='number'
-            {...register('firstNum', {required: true})}
-            onInput={handleFocus}
-          />
-          <input
-            className={`${dirtyFields.secondNum ? 'dirty' : ''} ${errors.secondNum ? 'invalid-value' : ''}`}
-            type='number'
-            {...register('secondNum', {required: true})}
-            onInput={handleFocus}
-          />
-          <input
-            className={`${dirtyFields.thirdNum ? 'dirty' : ''} ${errors.thirdNum ? 'invalid-value' : ''}`}
-            type='number'
-            {...register('thirdNum', {required: true})}
-            onInput={handleFocus}
-          />
-          <input
-            className={`${dirtyFields.fourthNum ? 'dirty' : ''} ${errors.fourthNum ? 'invalid-value' : ''}`}
-            type='number'
-            {...register('fourthNum', {required: true})}
-            onInput={handleFocus}
-          />
-          <input
-            className={`${dirtyFields.fifthNum ? 'dirty' : ''} ${errors.fifthNum ? 'invalid-value' : ''}`}
-            type='number'
-            {...register('fifthNum', {required: true})}
-            onInput={handleFocus}
-          />
-          <input
-            className={`${dirtyFields.sixthNum ? 'dirty' : ''} ${errors.sixthNum ? 'invalid-value' : ''}`}
-            type='number'
-            {...register('sixthNum', {required: true})}
-            onInput={handleFocus}
-          />
+          {
+            MESSAGE_FIELDS.map(item => (
+              <input
+                className={`${dirtyFields[item] ? 'dirty' : ''} ${errors[item] ? 'invalid-value' : ''}`}
+                type='number'
+                {...register(item, {required: true})}
+                onInput={handleFocus}
+              />
+            ))
+          }
 
           {isDirty && <Close onClick={() => reset()} />}
 
